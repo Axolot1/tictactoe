@@ -1,0 +1,46 @@
+#app {
+  margin: 20px auto;
+  width: 300px;
+}
+
+.board {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.cell {
+  width: 100px;
+  height: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid;
+  font-size: 50px;
+}
+
+.players {
+  display: flex;
+  justify-content: space-around;
+}
+
+.player {
+  font-size: 30px;
+  cursor: pointer;
+}
+
+.reset {
+  color: blueviolet;
+  margin-top: 20px;
+  margin-left: 120px;
+}
+
+.container {
+  width: 280px;
+  height: 400px;
+  margin: 40px auto;
+}
+
+body {
+  background: #00897b;
+  color: wheat;
+}
