@@ -19,7 +19,7 @@ function Selector(props) {
 
   return (
     <div>
-      <p>Select Player:</p>
+      <p>Select Player to Start Game:</p>
       <ul className="players">
         {players}
       </ul>

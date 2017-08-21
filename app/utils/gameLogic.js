@@ -1,16 +1,63 @@
 
-//computer take random choise
-export function computeNextStep(board){
-  const random =  getRandomInt(9);
-  if(board[random]){
-    return computeNextStep(board);
+function calcuScore(board, stepCount, ai){
+  const result = calculateWinner(board);
+  if(result === 'draw'){
+    return 0;
+  }else if(result === ai){
+    return 10 - stepCount;
   }else{
-    return random;
+    return -10 + stepCount
   }
 }
 
-function getRandomInt(max) {
-    return Math.floor(Math.random() * max);
+export function computeNextStep(board, player, ai){
+  const steps = availableSteps(board);
+  let perfectStep = steps[0];
+  let perfectScore = Number.MIN_SAFE_INTEGER;
+  steps.forEach(s => {
+    const score = weightStep(s, board, player, 1, ai);
+    if(score > perfectScore){
+      perfectScore = score;
+      perfectStep = s;
+    }
+  });
+  return perfectStep;
+}
+
+function availableSteps(board){
+  return board.reduce((pre, cur, i) => {
+    if(!cur){
+      pre.push(i);
+    }
+    return pre;
+  }, []);
+}
+
+export function reverPlayer(player){
+  return player === 'X' ? 'O' : 'X';
+}
+
+function weightStep(step, board, player, stepCount, ai){
+  const temp = board[step];
+  board[step] = player;
+  const result = calculateWinner(board);
+  if(result){
+    const score = calcuScore(board, stepCount, ai);
+    board[step] = temp;
+    return score;
+  }else{
+    let scoreList = [];
+    let steps = availableSteps(board);
+    for(let s of steps){
+      scoreList.push(weightStep(s, board, reverPlayer(player), stepCount + 1, ai));
+    }
+    board[step] = temp;
+    if(ai === player){
+      return Math.min(...scoreList);
+    }else{
+      return Math.max(...scoreList);
+    }
+  }
 }
 
 export function calculateWinner(board) {
