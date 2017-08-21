@@ -5,7 +5,7 @@ const webpack = require('webpack');
 let config = {
   entry: './app/index.js',
   output: {
-    path: __dirname,
+    path: path.resolve(__dirname, 'dist'),
     filename: 'index_bundle.js',
     publicPath: '/'
   },
